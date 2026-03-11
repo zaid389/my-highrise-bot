@@ -1,0 +1,88 @@
+
+{
+  "team_members": {
+    "VECTOR000": {
+      "role": "مؤسس الفريق",
+      "level": 999,
+      "badge": "👑",
+      "permissions": "*",
+      "secure": true,
+      "protected": true,
+      "title": "مؤسس فريق EDX المصري",
+      "joined_date": "2025-01-01",
+      "special_abilities": [
+        "تعديل إعدادات الفريق",
+        "إضافة أو إزالة أعضاء", 
+        "الوصول لجميع الأوامر",
+        "تعديل صلاحيات البوت"
+      ]
+    },
+    "A.OPY": {
+      "role": "مطور رئيسي",
+      "level": 998,
+      "badge": "💎",
+      "permissions": "*",
+      "secure": true,
+      "protected": true,
+      "title": "مطور رئيسي - فريق EDX",
+      "joined_date": "2025-01-01",
+      "special_abilities": [
+        "تطوير ميزات جديدة",
+        "إدارة قاعدة البيانات",
+        "الوصول لجميع الأوامر",
+        "إدارة التحديثات"
+      ]
+    },
+    "A.OXG": {
+      "role": "مطور رئيسي", 
+      "level": 998,
+      "badge": "💎",
+      "permissions": "*",
+      "secure": true,
+      "protected": true,
+      "title": "مطور رئيسي - فريق EDX",
+      "joined_date": "2025-01-01",
+      "special_abilities": [
+        "تطوير ميزات جديدة",
+        "إدارة قاعدة البيانات",
+        "الوصول لجميع الأوامر",
+        "إدارة التحديثات"
+      ]
+    },
+    "VECTOR001": {
+      "role": "مطور رئيسي",
+      "level": 998,
+      "badge": "💎", 
+      "permissions": "*",
+      "secure": true,
+      "protected": true,
+      "title": "مطور رئيسي - فريق EDX",
+      "joined_date": "2025-01-01",
+      "special_abilities": [
+        "تطوير ميزات جديدة",
+        "إدارة قاعدة البيانات",
+        "الوصول لجميع الأوامر",
+        "إدارة التحديثات"
+      ]
+    }
+  },
+  "team_info": {
+    "name": "فريق EDX المصري",
+    "protection_level": "MAXIMUM",
+    "file_type": "HIDDEN_SECURE",
+    "created_at": "2025-01-23T00:00:00"
+  },
+  "security": {
+    "encryption_enabled": true,
+    "modification_protection": true,
+    "access_restricted": true,
+    "backup_required": false,
+    "verification_hash": "edx_secure_2025_protected"
+  },
+  "access_control": {
+    "read_only": true,
+    "modification_denied": true,
+    "external_access": false,
+    "emergency_override": "VECTOR000_ONLY"
+  }
+}

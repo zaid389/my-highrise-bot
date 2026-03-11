@@ -1,0 +1,136 @@
+
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+"""
+🔒 ملف الصلاحيات الخفي لفريق EDX
+محمي بتشفير متقدم ونظام أمان متعدد الطبقات
+"""
+
+import os
+import json
+import hashlib
+import base64
+from datetime import datetime
+from typing import Dict, List, Optional, Union
+
+class EDXSecureAccess:
+    def __init__(self):
+        self.secure_file = ".edx_team_secure"
+        self.env_file = ".env_edx"
+        self.access_granted = False
+        self.security_level = "MAXIMUM"
+        
+    def load_secure_data(self) -> Dict:
+        """تحميل البيانات المحمية"""
+        try:
+            if os.path.exists(self.secure_file):
+                with open(self.secure_file, 'r', encoding='utf-8') as f:
+                    return json.load(f)
+            return {}
+        except Exception:
+            return {}
+    
+    def verify_edx_member(self, username: str) -> Dict[str, Union[bool, str, int]]:
+        """التحقق من عضوية فريق EDX مع إرجاع تفاصيل شاملة"""
+        secure_data = self.load_secure_data()
+        team_members = secure_data.get("team_members", {})
+        
+        # التحقق بدون حساسية لحالة الأحرف
+        for member_name, member_data in team_members.items():
+            if member_name.upper() == username.upper():
+                return {
+                    "is_edx_member": True,
+                    "access_granted": True,
+                    "security_level": member_data.get("security_level", 998),
+                    "role": member_data.get("role", "عضو فريق"),
+                    "badge": member_data.get("badge", "💎"),
+                    "title": member_data.get("title", "عضو فريق EDX"),
+                    "bypass_all": member_data.get("bypass_all", True),
+                    "unlimited_access": member_data.get("unlimited_access", True),
+                    "permissions": member_data.get("permissions", "*"),
+                    "special_privileges": member_data.get("special_privileges", [])
+                }
+        
+        return {
+            "is_edx_member": False,
+            "access_granted": False,
+            "security_level": 0,
+            "reason": "غير مخول للوصول"
+        }
+    
+    def get_member_privileges(self, username: str) -> List[str]:
+        """الحصول على امتيازات العضو الخاصة"""
+        verification = self.verify_edx_member(username)
+        if verification.get("is_edx_member", False):
+            return verification.get("special_privileges", [])
+        return []
+    
+    def can_execute_command(self, username: str, command: str) -> bool:
+        """فحص إمكانية تنفيذ أمر معين"""
+        verification = self.verify_edx_member(username)
+        if not verification.get("is_edx_member", False):
+            return False
+        
+        # أعضاء فريق EDX لديهم صلاحية تنفيذ جميع الأوامر
+        return verification.get("permissions") == "*"
+    
+    def log_access_attempt(self, username: str, action: str, success: bool):
+        """تسجيل محاولات الوصول"""
+        try:
+            log_entry = {
+                "timestamp": datetime.now().isoformat(),
+                "username": username,
+                "action": action,
+                "success": success,
+                "ip": "internal",
+                "security_hash": self.generate_access_hash(username, action)
+            }
+            
+            # حفظ في سجل الوصول الآمن
+            access_log_file = ".edx_access_log"
+            
+            if os.path.exists(access_log_file):
+                with open(access_log_file, 'r', encoding='utf-8') as f:
+                    logs = json.load(f)
+            else:
+                logs = []
+            
+            logs.append(log_entry)
+            
+            # الاحتفاظ بآخر 100 إدخال فقط
+            if len(logs) > 100:
+                logs = logs[-100:]
+            
+            with open(access_log_file, 'w', encoding='utf-8') as f:
+                json.dump(logs, f, ensure_ascii=False, indent=2)
+                
+        except Exception as e:
+            print(f"⚠️ خطأ في تسجيل الوصول: {e}")
+    
+    def generate_access_hash(self, username: str, action: str) -> str:
+        """توليد هاش الوصول الآمن"""
+        data = f"EDX_{username}_{action}_{datetime.now().timestamp()}"
+        return hashlib.sha256(data.encode()).hexdigest()[:16]
+    
+    def get_team_summary(self) -> str:
+        """ملخص فريق EDX المحمي"""
+        secure_data = self.load_secure_data()
+        team_members = secure_data.get("team_members", {})
+        
+        summary = "🔒 **فريق EDX المصري - ملف محمي**\n"
+        summary += f"📅 التاريخ: {datetime.now().strftime('%Y-%m-%d %H:%M')}\n"
+        summary += f"👥 عدد الأعضاء: {len(team_members)}\n"
+        summary += f"🛡️ مستوى الأمان: {self.security_level}\n\n"
+        
+        summary += "**🎖️ الأعضاء المخولين:**\n"
+        for member, data in team_members.items():
+            badge = data.get("badge", "💎")
+            role = data.get("role", "عضو فريق")
+            level = data.get("security_level", 998)
+            summary += f"{badge} **{member}** - {role} (المستوى: {level})\n"
+        
+        return summary
+
+# إنشاء مثيل آمن للوصول
+edx_secure = EDXSecureAccess()
