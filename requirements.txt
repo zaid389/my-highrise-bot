@@ -1,5 +1,5 @@
-setuptools
-wheel
+setuptools==68.0.0
+wheel==0.41.2
 flask==3.0.1
 python-dotenv==1.0.0
 highrise-bot-sdk==24.1.0
@@ -8,3 +8,6 @@ requests==2.31.0
 Werkzeug==3.0.1
 typing_extensions==3.10.0.2
 pendulum==2.1.2
+pydantic==2.7.4
+grpcio==1.78.0
+protobuf==4.25.3
